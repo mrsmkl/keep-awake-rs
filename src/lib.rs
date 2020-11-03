@@ -1,19 +1,12 @@
 
 
-use dbus::blocking::Connection;
-use std::time::Duration;
-use dbus::Message;
-use dbus::blocking::BlockingSender;
+#[cfg_attr(target_os = "linux", path = "linux.rs")]
+#[cfg_attr(target_os = "windows", path = "windows.rs")]
+mod os;
 
-pub struct Holder {
-    conn: Connection,
-}
+use crate::os::Holder;
 
 pub fn inhibit(name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
-    let conn = Connection::new_session()?;
-
-    let m = Message::new_method_call("org.freedesktop.ScreenSaver", "/org/freedesktop/ScreenSaver", "org.freedesktop.ScreenSaver", "Inhibit")?
-      .append2(name, reason);
-    conn.send_with_reply_and_block(m, Duration::from_millis(2000))?;
-    Ok(Holder{conn: conn})
+    os::inhibit(name, reason)
 }
+
