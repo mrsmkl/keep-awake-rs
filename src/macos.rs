@@ -1,16 +1,22 @@
 
-extern crate CoreFoundation_sys as cf;
 extern crate libc;
 extern crate mach;
 
-use cf::{CFTypeRef,CFDictionaryRef,CFMutableDictionaryRef,CFStringRef,CFAllocatorRef};
-use libc::{c_void,c_char,c_int,size_t,uintptr_t,uint32_t};
+use core_foundation::base::TCFType;
+use core_foundation::string::{CFString, CFStringRef};
 
-use mach::kern_return::{kern_return_t,KERN_SUCCESS};
+
+use mach::kern_return::{kern_return_t /* ,KERN_SUCCESS */ };
 
 pub type IOReturn = kern_return_t;
-pub type IOPMAssertionLevel = uint32_t;
-pub type IOPMAssertionId = uint32_t;
+pub type IOPMAssertionLevel = u32;
+pub type IOPMAssertionId = u32;
+
+// const kIOPMAssertionTypeNoDisplaySleep : CFString = CFString::from_static_string("NoDisplaySleepAssertion");
+// const kIOPMAssertionTypePreventSystemSleep : CFString = CFString::from_static_string("PreventSystemSleep");
+
+// const K_IOPMASSERTION_LEVEL_OFF : IOPMAssertionLevel = 0;
+const K_IOPMASSERTION_LEVEL_ON : IOPMAssertionLevel = 255;
 
 extern "C" {
     pub fn IOPMAssertionCreateWithName(
@@ -19,12 +25,21 @@ extern "C" {
         assertion_name: CFStringRef,
         assertion_id: &mut IOPMAssertionId) -> IOReturn;
     
-    pub fn IOPMAssertionRelease(assertion_id: IOPMAssertionId) -> IOReturn;
+    // pub fn IOPMAssertionRelease(assertion_id: IOPMAssertionId) -> IOReturn;
 }
 
 pub struct Holder {
+    _id : IOPMAssertionId,
 }
 
-pub fn inhibit(name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
-    Ok(Holder {  })
+pub fn inhibit(_name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
+    let k_iopmassertion_type_prevent_system_sleep : CFString = CFString::from_static_string("PreventSystemSleep");
+    let mut id : IOPMAssertionId = 0;
+    let reason_cf = CFString::new(reason);
+    unsafe {
+        let ret = IOPMAssertionCreateWithName(k_iopmassertion_type_prevent_system_sleep.as_concrete_TypeRef(), K_IOPMASSERTION_LEVEL_ON, reason_cf.as_concrete_TypeRef(), &mut id);
+        println!("returned {:?}, id is now {:?}", ret, id);
+    }
+    Ok(Holder { _id: id })
 }
+

@@ -4,8 +4,6 @@ version = "0.1.0"
 authors = ["Sami Mäkelä <mrsmkl@gmail.com>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [target.'cfg(target_os="linux")'.dependencies]
 "dbus" = "0.9.0"
 
@@ -13,12 +11,6 @@ edition = "2018"
 winapi = { version = "0.3", features= ["winnt", "winbase"] }
 
 [target.'cfg(target_os="macos")'.dependencies]
-objc-foundation = "0.1.1"
-objc_id = "0.1.1"
 libc = "0.2"
 mach = "0.1.1"
-CoreFoundation-sys = "0.1.4"
-
-[build-dependencies]
-cc = "1.0.17"
-
+core-foundation = "0.9.1"
