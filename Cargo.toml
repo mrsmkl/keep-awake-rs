@@ -12,3 +12,13 @@ edition = "2018"
 [target.'cfg(target_os="windows")'.dependencies]
 winapi = { version = "0.3", features= ["winnt", "winbase"] }
 
+[target.'cfg(target_os="macos")'.dependencies]
+objc-foundation = "0.1.1"
+objc_id = "0.1.1"
+libc = "0.2"
+mach = "0.1.1"
+CoreFoundation-sys = "0.1.4"
+
+[build-dependencies]
+cc = "1.0.17"
+
