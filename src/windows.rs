@@ -10,3 +10,11 @@ pub fn inhibit(_name: &str, _reason: &str) -> Result<Holder, Box<dyn std::error:
     }
     Ok(Holder {})
 }
+
+impl Drop for Holder {
+    fn drop(&mut self) {
+        unsafe {
+            let _res = SetThreadExecutionState(0);
+        }
+    }
+}
