@@ -1,5 +1,7 @@
 use winapi::um::winbase::SetThreadExecutionState;
-use winapi::um::winnt::{ES_CONTINUOUS, ES_DISPLAY_REQUIRED, /* ES_SYSTEM_REQUIRED, EXECUTION_STATE */ };
+use winapi::um::winnt::{
+    ES_CONTINUOUS, ES_DISPLAY_REQUIRED, /* ES_SYSTEM_REQUIRED, EXECUTION_STATE */
+};
 
 pub struct Holder {}
 

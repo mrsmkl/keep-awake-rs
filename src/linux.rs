@@ -1,22 +1,17 @@
-use dbus::blocking::BlockingSender;
-use dbus::blocking::Connection;
-use dbus::Message;
-use std::time::Duration;
-
 pub struct Holder {
-    _conn: Connection,
+    _conn: zbus::Connection,
 }
 
 pub fn inhibit(name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
-    let conn = Connection::new_session()?;
-
-    let m = Message::new_method_call(
-        "org.freedesktop.ScreenSaver",
-        "/org/freedesktop/ScreenSaver",
-        "org.freedesktop.ScreenSaver",
-        "Inhibit",
-    )?
-    .append2(name, reason);
-    conn.send_with_reply_and_block(m, Duration::from_millis(2000))?;
+    let conn = zbus::Connection::new_session().unwrap();
+    let _reply = conn
+        .call_method(
+            Some("org.freedesktop.ScreenSaver"),
+            "/org/freedesktop/ScreenSaver",
+            Some("org.freedesktop.ScreenSaver"),
+            "Inhibit",
+            &(name, reason),
+        )
+        .unwrap();
     Ok(Holder { _conn: conn })
 }
