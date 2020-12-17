@@ -12,8 +12,7 @@ pub fn inhibit(name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::E
                     Some("org.freedesktop.ScreenSaver"),
                     "Inhibit",
                     &(name, reason),
-                )
-                .unwrap();
+                );
             Ok(Holder { _conn: Some(conn) })
         }
         _ => Ok(Holder { _conn: None }),
