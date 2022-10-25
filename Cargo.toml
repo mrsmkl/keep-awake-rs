@@ -5,10 +5,10 @@ authors = ["Sami Mäkelä <mrsmkl@gmail.com>"]
 edition = "2021"
 
 [target.'cfg(target_os="linux")'.dependencies]
-"zbus" = "3.1.0"
+"zbus" = "3.3.0"
 
 [target.'cfg(target_os="windows")'.dependencies]
-windows = { version = "0.42", features = ["Win32_System_Power"] }
+windows = { version = "0.43", features = ["Win32_System_Power"] }
 
 [target.'cfg(target_os="macos")'.dependencies]
 libc = "0.2"
