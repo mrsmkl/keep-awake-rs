@@ -8,7 +8,7 @@ edition = "2021"
 "zbus" = "3.7.0"
 
 [target.'cfg(target_os="windows")'.dependencies]
-windows = { version = "0.44", features = ["Win32_System_Power"] }
+windows = { version = "0.46", features = ["Win32_System_Power"] }
 
 [target.'cfg(target_os="macos")'.dependencies]
 libc = "0.2"
