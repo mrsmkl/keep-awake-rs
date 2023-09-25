@@ -7,13 +7,4 @@ mod os;
 
 // Good reference for other platforms: https://github.com/chromium/chromium/tree/main/services/device/wake_lock/power_save_blocker
 
-use crate::os::Holder;
-
-pub fn inhibit_display(name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
-    os::inhibit_display(name, reason)
-}
-
-pub fn inhibit_system(name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
-    os::inhibit_system(name, reason)
-}
-
+pub use os::*;
