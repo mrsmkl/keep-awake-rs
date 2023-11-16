@@ -11,7 +11,7 @@ log = "0.4"
 "zbus" = "3.14.1"
 
 [target.'cfg(target_os="windows")'.dependencies]
-windows = { version = "0.51", features = ["Win32_System_Power"] }
+windows = { version = "0.52", features = ["Win32_System_Power"] }
 
 [target.'cfg(target_os="macos")'.dependencies]
 libc = "0.2"
