@@ -1,10 +1,10 @@
 #[cfg_attr(target_os = "linux", path = "linux.rs")]
 #[cfg_attr(target_os = "windows", path = "windows.rs")]
 #[cfg_attr(target_os = "macos", path = "macos.rs")]
+#[cfg_attr(target_os = "android", path = "android.rs")]
+#[cfg_attr(target_os = "ios", path = "ios.rs")]
 mod os;
 
-use crate::os::Holder;
+// Good reference for other platforms: https://github.com/chromium/chromium/tree/main/services/device/wake_lock/power_save_blocker
 
-pub fn inhibit(name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
-    os::inhibit(name, reason)
-}
+pub use os::*;

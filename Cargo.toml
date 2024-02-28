@@ -2,15 +2,27 @@
 name = "keep-awake"
 version = "0.1.0"
 authors = ["Sami Mäkelä <mrsmkl@gmail.com>"]
-edition = "2018"
+edition = "2021"
+
+[dependencies]
+log = "0.4"
 
 [target.'cfg(target_os="linux")'.dependencies]
-"zbus" = "1.2.1"
+"zbus" = "4.1.2"
 
 [target.'cfg(target_os="windows")'.dependencies]
-winapi = { version = "0.3", features= ["winnt", "winbase"] }
+windows = { version = "0.54", features = ["Win32_System_Power"] }
 
 [target.'cfg(target_os="macos")'.dependencies]
 libc = "0.2"
-mach = "0.1.1"
-core-foundation = "0.9.1"
+mach = "0.3.2"
+core-foundation = "0.9.4"
+
+[target.'cfg(target_os = "android")'.dependencies]
+jni = "0.21"
+ndk-context = "0.1"
+
+[target.'cfg(target_os = "ios")'.dependencies]
+objc = "0.2.7"
+core-foundation = "0.9.4"
+dispatch = "0.2.0"

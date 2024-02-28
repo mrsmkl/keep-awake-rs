@@ -31,9 +31,16 @@ pub struct Holder {
     id: IOPMAssertionId,
 }
 
-pub fn inhibit(_name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
+pub fn inhibit_display(_name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
+    inhibit_impl(reason, "NoDisplaySleepAssertion")
+}
+pub fn inhibit_system(_name: &str, reason: &str) -> Result<Holder, Box<dyn std::error::Error>> {
+    inhibit_impl(reason, "PreventSystemSleep")
+}
+
+fn inhibit_impl(reason: &str, assertion: &'static str) -> Result<Holder, Box<dyn std::error::Error>> {
     let k_iopmassertion_type_prevent_system_sleep: CFString =
-        CFString::from_static_string("NoDisplaySleepAssertion");
+        CFString::from_static_string(assertion);
     let mut id: IOPMAssertionId = 0;
     let reason_cf = CFString::new(reason);
     unsafe {
